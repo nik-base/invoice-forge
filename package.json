@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "name": "invoiceforge",
+  "description": "Convert JSON invoice data to e-invoice XML — targeting XRechnung 3.0 UBL and Peppol BIS 3.0 (CII and more formats coming).",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "scripts": {
+    "build": "pnpm -r run build",
+    "test": "pnpm -r run test",
+    "clean": "pnpm -r run clean"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "pnpm@10.26.1"
+}

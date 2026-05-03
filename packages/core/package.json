@@ -1,0 +1,75 @@
+{
+  "name": "@invoiceforge/core",
+  "description": "Convert JSON invoice data to e-invoice XML — targeting XRechnung 3.0 UBL and Peppol BIS 3.0 (CII and more formats coming).",
+  "version": "0.1.0",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": "InvoiceForge",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/invoiceforge/invoice-forge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/invoiceforge/invoice-forge/issues"
+  },
+  "keywords": [
+    "invoice",
+    "e-invoice",
+    "einvoice",
+    "ubl",
+    "xrechnung",
+    "peppol",
+    "en16931",
+    "xml",
+    "b2b",
+    "billing",
+    "eu-invoice"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./schema": {
+      "import": "./dist/schema/invoice.js",
+      "types": "./dist/schema/invoice.d.ts"
+    },
+    "./types": {
+      "import": "./dist/types.js",
+      "types": "./dist/types.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --reporter=verbose",
+    "test:watch": "vitest",
+    "bench": "vitest bench",
+    "lint": "echo 'Add ESLint when ready'",
+    "clean": "rimraf dist",
+    "prepublishOnly": "pnpm run clean && pnpm run build && pnpm run test"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "dependencies": {
+    "@e-invoice-eu/core": "^2.3.2",
+    "ajv": "^8.18.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^3.0.0",
+    "rimraf": "^6.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}
