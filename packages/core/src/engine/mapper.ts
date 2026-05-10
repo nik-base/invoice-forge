@@ -204,16 +204,13 @@ export function mapToEInvoiceFormat(
 
   const currency = invoice.currency as Invoice['ubl:Invoice']['cbc:DocumentCurrencyCode'];
 
-  // Compute totals — sum of rounded line extension amounts (EN16931 BR-CO-10)
-  const taxExclusiveAmount = roundNum(
-    invoice.lineItems.reduce(
-      (sum, item) => sum + roundNum(item.quantity * item.unitPrice),
-      0,
-    ),
-  );
-
   // Compute VAT breakdown ONCE — reused both for totals and for cac:TaxTotal
   const vatBreakdown = buildVatBreakdown(invoice.lineItems, invoice.currency);
+
+  // Compute totals — sum of rounded line extension amounts (EN16931 BR-CO-10)
+  const taxExclusiveAmount = roundNum(
+    vatBreakdown.reduce((sum, b) => sum + parseFloat(b['cbc:TaxableAmount']), 0),
+  );
   const taxAmount = roundNum(
     vatBreakdown.reduce((sum, b) => sum + parseFloat(b['cbc:TaxAmount']), 0),
   );
