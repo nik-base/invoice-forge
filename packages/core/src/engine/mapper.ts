@@ -2,7 +2,7 @@ import type { Invoice } from '@e-invoice-eu/core';
 import type { InvoiceInput, LineItemInput } from '../schema/invoice.js';
 import type { InvoiceTotals } from '../types.js';
 import type { VatBreakdownEntry } from './math.js';
-import { round2, buildVatBreakdown } from './math.js';
+import { round2, roundNum, buildVatBreakdown } from './math.js';
 import { getEndpointDetails } from './endpoint.js';
 import {
   PEPPOL_CUSTOMIZATION_ID,
@@ -137,6 +137,8 @@ function mapBuyerParty(invoice: InvoiceInput): CustomerParty {
           'cbc:EndpointID@schemeID': endpoint.scheme as string,
         }
       : {}),
+    // NOTE: @e-invoice-eu/core AJV schema validates CustomerParty['cac:PartyIdentification']
+    // as a single object (not an array), unlike SupplierParty. We follow the library schema here.
     ...(idFallback !== undefined
       ? { 'cac:PartyIdentification': { 'cbc:ID': idFallback } }
       : {}),
@@ -202,16 +204,17 @@ export function mapToEInvoiceFormat(
 
   const currency = invoice.currency as Invoice['ubl:Invoice']['cbc:DocumentCurrencyCode'];
 
-  // Compute totals
-  const taxExclusiveAmount = invoice.lineItems.reduce(
-    (sum, item) => sum + item.quantity * item.unitPrice,
-    0,
-  );
-
   // Compute VAT breakdown ONCE — reused both for totals and for cac:TaxTotal
   const vatBreakdown = buildVatBreakdown(invoice.lineItems, invoice.currency);
-  const taxAmount = vatBreakdown.reduce((sum, b) => sum + parseFloat(b['cbc:TaxAmount']), 0);
-  const taxInclusiveAmount = taxExclusiveAmount + taxAmount;
+
+  // Compute totals — sum of rounded line extension amounts (EN16931 BR-CO-10)
+  const taxExclusiveAmount = roundNum(
+    vatBreakdown.reduce((sum, b) => sum + parseFloat(b['cbc:TaxableAmount']), 0),
+  );
+  const taxAmount = roundNum(
+    vatBreakdown.reduce((sum, b) => sum + parseFloat(b['cbc:TaxAmount']), 0),
+  );
+  const taxInclusiveAmount = roundNum(taxExclusiveAmount + taxAmount);
 
   // Build payment means
   const paymentMeans = invoice.payment !== undefined

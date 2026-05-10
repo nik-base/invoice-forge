@@ -4,6 +4,16 @@
 
 ---
 
+## Beta Period — Free Commercial Use
+
+**Notwithstanding Section 2 below, during the Beta Period all Commercial Use of the Software is permitted free of charge.**
+
+- The **Beta Period** commences on the date of the first public release of the Software and ends upon the Author's written public announcement that the Beta Period has concluded.
+- All other terms of this license remain in full effect during the Beta Period, including (without limitation) the redistribution restrictions in Section 3, the trademark restrictions in Section 6, and the warranty disclaimers in Sections 7 and 8.
+- Once the Beta Period ends, any continued Commercial Use requires a valid Commercial License as described in Section 2.
+
+---
+
 ## Copyright Notice
 
 Copyright (c) 2026 invoice-forge. All rights reserved.
@@ -47,6 +57,8 @@ Without a Commercial License, the following are expressly prohibited:
 4. White-Label Use — redistributing or reselling the Software or any product built on it under a different name or brand.
 5. Including the Software in a commercial product, SDK, or library that is itself distributed to third parties.
 6. Using the Software to deliver services to paying clients in a freelance, agency, or consulting capacity.
+
+*See the Beta Period section at the top of this license for the current temporary exception to Section 2.*
 
 ---
 

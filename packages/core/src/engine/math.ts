@@ -7,7 +7,21 @@ import type { LineItemInput } from '../schema/invoice.js';
  * @internal
  */
 export function round2(n: number): string {
-  return (Math.round((n + Number.EPSILON) * 100) / 100).toFixed(2);
+  return roundNum(n).toFixed(2);
+}
+
+/**
+ * Half-up rounding to 2 decimal places — returns a number.
+ *
+ * Uses Number.EPSILON to correct IEEE 754 drift for values representable
+ * as money amounts (unit prices, quantities, totals). For invoice inputs
+ * this is sufficient; edge cases like 1e-7 or 1000.005 do not arise in
+ * practice. If sub-cent precision becomes a requirement, migrate to big.js.
+ *
+ * @internal
+ */
+export function roundNum(n: number): number {
+  return Math.round((n + Number.EPSILON) * 100) / 100;
 }
 
 export interface VatBreakdownEntry {
@@ -41,7 +55,7 @@ export function buildVatBreakdown(
   const groups = new Map<string, { taxable: number; rate: number; category: string }>();
 
   for (const item of items) {
-    const lineTotal = item.quantity * item.unitPrice;
+    const lineTotal = roundNum(item.quantity * item.unitPrice);
     const key = `${item.vatCategory ?? 'S'}-${item.vatRate}`;
     const existing = groups.get(key);
     if (existing !== undefined) {
@@ -57,10 +71,9 @@ export function buildVatBreakdown(
 
   return Array.from(groups.values()).map((g) => {
     // EN16931 BT-116: round the category taxable base first
-    const categoryTaxableRound = Math.round((g.taxable + Number.EPSILON) * 100) / 100;
+    const categoryTaxableRound = roundNum(g.taxable);
     // EN16931 BT-117: apply rate to the rounded base
-    const categoryTaxAmount =
-      Math.round((categoryTaxableRound * (g.rate / 100) + Number.EPSILON) * 100) / 100;
+    const categoryTaxAmount = roundNum(categoryTaxableRound * (g.rate / 100));
 
     return {
       'cbc:TaxableAmount': categoryTaxableRound.toFixed(2),

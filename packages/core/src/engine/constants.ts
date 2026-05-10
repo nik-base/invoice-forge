@@ -139,7 +139,13 @@ export type SupportedFormat = (typeof SUPPORTED_FORMATS)[number];
 // ── Rule ID resolution ───────────────────────────────────────────────────────
 
 export function ruleIdForAjvPath(instancePath: string): string | undefined {
-  const segments = instancePath.split('/');
+  // Strip the root namespace prefix that @e-invoice-eu/core prepends (e.g. /ubl:Invoice)
+  // so our relative map keys (e.g. /cac:InvoiceLine) can be matched correctly.
+  const stripped = instancePath.replace(/^\/[^/]+/, '');
+  const path = stripped.length > 0 ? stripped : instancePath;
+
+  // Longest-prefix match: try from the full path down to each ancestor segment.
+  const segments = path.split('/');
   for (let len = segments.length; len > 0; len--) {
     const candidate = segments.slice(0, len).join('/');
     const match = AJV_PATH_TO_RULE_ID[candidate];
