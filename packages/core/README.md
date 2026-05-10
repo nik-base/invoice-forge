@@ -6,7 +6,7 @@ Supports **XRechnung 3.0 UBL** (Germany) and **Peppol BIS Billing 3.0** — the 
 e-invoice formats for EU B2B and B2G transactions.
 
 [![npm version](https://img.shields.io/npm/v/@invoiceforge/core)](https://www.npmjs.com/package/@invoiceforge/core)
-[![license](https://img.shields.io/badge/license-Commercial-blue)](../../LICENSE.md)
+[![license](https://img.shields.io/badge/license-Free%20in%20Beta-brightgreen)](../../LICENSE.md)
 
 ---
 
@@ -240,13 +240,15 @@ import type {
 
 ## Contributing
 
-We welcome contributions! However, because InvoiceForge is dual-licensed and sold commercially, all contributors must agree to grant us the right to distribute your code commercially. 
+We welcome contributions! However, because InvoiceForge is dual-licensed and sold commercially, all contributors must agree to grant us the right to distribute your code commercially.
 
-Please see our [CONTRIBUTING.md](../../CONTRIBUTING.md) for full details on the development workflow and contributor terms.
+Please see [CONTRIBUTING.md](https://github.com/invoiceforge/invoice-forge/blob/main/CONTRIBUTING.md) for full details on the development workflow and contributor terms.
 
 ---
 
 ## License
 
-Free for non-commercial use. Commercial use requires a license.
-See [LICENSE.md](../../LICENSE.md) for full terms.
+Free for everyone during the public beta — including commercial use.
+After the beta: free for non-commercial use, commercial use requires a license.
+
+See [LICENSE.md](https://github.com/invoiceforge/invoice-forge/blob/main/LICENSE.md) for full terms.

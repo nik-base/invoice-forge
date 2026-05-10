@@ -21,7 +21,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 ## License
 
 InvoiceForge is dual-licensed:
-- **Free for non-commercial use.**
-- **Commercial use requires a license.**
+- **Free for everyone during the public beta** (commercial use included).
+- After the beta: free for non-commercial use, commercial use requires a license.
 
 See [LICENSE.md](LICENSE.md) for full terms.

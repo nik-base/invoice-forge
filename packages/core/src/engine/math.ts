@@ -17,7 +17,7 @@ export function round2(n: number): string {
  * @internal
  */
 export function roundNum(n: number): number {
-  return Math.round((n + Number.EPSILON) * 100) / 100;
+  return Math.round(Number(`${n}e2`)) / 100;
 }
 
 export interface VatBreakdownEntry {
