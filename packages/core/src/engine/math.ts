@@ -41,7 +41,7 @@ export function buildVatBreakdown(
   const groups = new Map<string, { taxable: number; rate: number; category: string }>();
 
   for (const item of items) {
-    const lineTotal = item.quantity * item.unitPrice;
+    const lineTotal = Math.round((item.quantity * item.unitPrice + Number.EPSILON) * 100) / 100;
     const key = `${item.vatCategory ?? 'S'}-${item.vatRate}`;
     const existing = groups.get(key);
     if (existing !== undefined) {

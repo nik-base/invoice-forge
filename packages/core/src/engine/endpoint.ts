@@ -58,7 +58,8 @@ export interface EndpointDetails {
 export function getEndpointDetails(party: PartyInput): EndpointDetails | undefined {
   if (party.vatNumber !== undefined && party.vatNumber.length >= 2) {
     const prefix = party.vatNumber.substring(0, 2).toUpperCase();
-    const scheme = ENDPOINT_SCHEME_MAP[prefix] ?? '9930';
+    const scheme = ENDPOINT_SCHEME_MAP[prefix];
+    if (scheme === undefined) return undefined;
     return { id: party.vatNumber, scheme };
   }
   if (party.email !== undefined) {

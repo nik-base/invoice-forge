@@ -137,6 +137,8 @@ function mapBuyerParty(invoice: InvoiceInput): CustomerParty {
           'cbc:EndpointID@schemeID': endpoint.scheme as string,
         }
       : {}),
+    // NOTE: @e-invoice-eu/core AJV schema validates CustomerParty['cac:PartyIdentification']
+    // as a single object (not an array), unlike SupplierParty. We follow the library schema here.
     ...(idFallback !== undefined
       ? { 'cac:PartyIdentification': { 'cbc:ID': idFallback } }
       : {}),
@@ -204,7 +206,7 @@ export function mapToEInvoiceFormat(
 
   // Compute totals
   const taxExclusiveAmount = invoice.lineItems.reduce(
-    (sum, item) => sum + item.quantity * item.unitPrice,
+    (sum, item) => sum + Math.round((item.quantity * item.unitPrice + Number.EPSILON) * 100) / 100,
     0,
   );
 

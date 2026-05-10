@@ -139,11 +139,8 @@ export type SupportedFormat = (typeof SUPPORTED_FORMATS)[number];
 // ── Rule ID resolution ───────────────────────────────────────────────────────
 
 export function ruleIdForAjvPath(instancePath: string): string | undefined {
-  const segments = instancePath.split('/');
-  for (let len = segments.length; len > 0; len--) {
-    const candidate = segments.slice(0, len).join('/');
-    const match = AJV_PATH_TO_RULE_ID[candidate];
-    if (match !== undefined) return match;
+  for (const [path, ruleId] of Object.entries(AJV_PATH_TO_RULE_ID)) {
+    if (instancePath.endsWith(path)) return ruleId;
   }
   return undefined;
 }
