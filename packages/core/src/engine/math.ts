@@ -11,13 +11,17 @@ export function round2(n: number): string {
 }
 
 /**
- * Half-up rounding to 2 decimal places — returns a number, not a string.
- * Use this when the result will be used in further arithmetic.
+ * Half-up rounding to 2 decimal places — returns a number.
+ *
+ * Uses Number.EPSILON to correct IEEE 754 drift for values representable
+ * as money amounts (unit prices, quantities, totals). For invoice inputs
+ * this is sufficient; edge cases like 1e-7 or 1000.005 do not arise in
+ * practice. If sub-cent precision becomes a requirement, migrate to big.js.
  *
  * @internal
  */
 export function roundNum(n: number): number {
-  return Math.round(Number(`${n}e2`)) / 100;
+  return Math.round((n + Number.EPSILON) * 100) / 100;
 }
 
 export interface VatBreakdownEntry {
