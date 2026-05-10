@@ -2,7 +2,7 @@ import type { Invoice } from '@e-invoice-eu/core';
 import type { InvoiceInput, LineItemInput } from '../schema/invoice.js';
 import type { InvoiceTotals } from '../types.js';
 import type { VatBreakdownEntry } from './math.js';
-import { round2, buildVatBreakdown } from './math.js';
+import { round2, roundNum, buildVatBreakdown } from './math.js';
 import { getEndpointDetails } from './endpoint.js';
 import {
   PEPPOL_CUSTOMIZATION_ID,
@@ -204,9 +204,9 @@ export function mapToEInvoiceFormat(
 
   const currency = invoice.currency as Invoice['ubl:Invoice']['cbc:DocumentCurrencyCode'];
 
-  // Compute totals
+  // Compute totals — sum of rounded line extension amounts (EN16931 BR-CO-10)
   const taxExclusiveAmount = invoice.lineItems.reduce(
-    (sum, item) => sum + Math.round((item.quantity * item.unitPrice + Number.EPSILON) * 100) / 100,
+    (sum, item) => sum + roundNum(item.quantity * item.unitPrice),
     0,
   );
 
