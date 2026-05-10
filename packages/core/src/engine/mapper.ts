@@ -205,15 +205,19 @@ export function mapToEInvoiceFormat(
   const currency = invoice.currency as Invoice['ubl:Invoice']['cbc:DocumentCurrencyCode'];
 
   // Compute totals — sum of rounded line extension amounts (EN16931 BR-CO-10)
-  const taxExclusiveAmount = invoice.lineItems.reduce(
-    (sum, item) => sum + roundNum(item.quantity * item.unitPrice),
-    0,
+  const taxExclusiveAmount = roundNum(
+    invoice.lineItems.reduce(
+      (sum, item) => sum + roundNum(item.quantity * item.unitPrice),
+      0,
+    ),
   );
 
   // Compute VAT breakdown ONCE — reused both for totals and for cac:TaxTotal
   const vatBreakdown = buildVatBreakdown(invoice.lineItems, invoice.currency);
-  const taxAmount = vatBreakdown.reduce((sum, b) => sum + parseFloat(b['cbc:TaxAmount']), 0);
-  const taxInclusiveAmount = taxExclusiveAmount + taxAmount;
+  const taxAmount = roundNum(
+    vatBreakdown.reduce((sum, b) => sum + parseFloat(b['cbc:TaxAmount']), 0),
+  );
+  const taxInclusiveAmount = roundNum(taxExclusiveAmount + taxAmount);
 
   // Build payment means
   const paymentMeans = invoice.payment !== undefined

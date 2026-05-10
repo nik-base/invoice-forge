@@ -59,8 +59,7 @@ export function getEndpointDetails(party: PartyInput): EndpointDetails | undefin
   if (party.vatNumber !== undefined && party.vatNumber.length >= 2) {
     const prefix = party.vatNumber.substring(0, 2).toUpperCase();
     const scheme = ENDPOINT_SCHEME_MAP[prefix];
-    if (scheme === undefined) return undefined;
-    return { id: party.vatNumber, scheme };
+    if (scheme !== undefined) return { id: party.vatNumber, scheme };
   }
   if (party.email !== undefined) {
     return { id: party.email, scheme: 'EM' };
