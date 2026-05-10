@@ -3,13 +3,13 @@
   "description": "Convert JSON invoice data to e-invoice XML — targeting XRechnung 3.0 UBL and Peppol BIS 3.0 (CII and more formats coming).",
   "version": "0.1.0",
   "license": "SEE LICENSE IN LICENSE.md",
-  "author": "InvoiceForge",
+  "author": "Nikhil Patil",
   "repository": {
     "type": "git",
-    "url": "https://github.com/invoiceforge/invoice-forge.git"
+    "url": "git+https://github.com/nik-base/invoice-forge.git"
   },
   "bugs": {
-    "url": "https://github.com/invoiceforge/invoice-forge/issues"
+    "url": "https://github.com/nik-base/invoice-forge/issues"
   },
   "keywords": [
     "invoice",

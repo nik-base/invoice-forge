@@ -242,7 +242,7 @@ import type {
 
 We welcome contributions! However, because InvoiceForge is dual-licensed and sold commercially, all contributors must agree to grant us the right to distribute your code commercially.
 
-Please see [CONTRIBUTING.md](https://github.com/invoiceforge/invoice-forge/blob/main/CONTRIBUTING.md) for full details on the development workflow and contributor terms.
+Please see [CONTRIBUTING.md](https://github.com/nik-base/invoice-forge/blob/main/CONTRIBUTING.md) for full details on the development workflow and contributor terms.
 
 ---
 
@@ -251,4 +251,4 @@ Please see [CONTRIBUTING.md](https://github.com/invoiceforge/invoice-forge/blob/
 Free for everyone during the public beta — including commercial use.
 After the beta: free for non-commercial use, commercial use requires a license.
 
-See [LICENSE.md](https://github.com/invoiceforge/invoice-forge/blob/main/LICENSE.md) for full terms.
+See [LICENSE.md](https://github.com/nik-base/invoice-forge/blob/main/LICENSE.md) for full terms.
